@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AccountHoldersRepository extends JpaRepository<AccountHolders, Integer> {
+    public AccountHolders  findByName(String name);
 }

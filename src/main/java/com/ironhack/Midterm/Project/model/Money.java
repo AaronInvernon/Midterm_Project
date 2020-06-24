@@ -5,6 +5,9 @@ import java.math.RoundingMode;
 import java.util.Currency;
 import com.ironhack.Midterm.Project.interfaces.*;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+@Embeddable
 public class Money implements Transactional {
     private static final Currency USD = Currency.getInstance("USD");
     private static final RoundingMode DEFAULT_ROUNDING = RoundingMode.HALF_EVEN;

@@ -1,18 +1,15 @@
 package com.ironhack.Midterm.Project.model;
 
-import com.ironhack.Midterm.Project.enums.Status;
 import com.ironhack.Midterm.Project.exceptions.InsterestRateException;
 import com.ironhack.Midterm.Project.exceptions.MinimumBalanceException;
-import jdk.tools.jaotc.LoadedClass;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Savings extends Checking{
 
     @Id
@@ -25,7 +22,7 @@ public class Savings extends Checking{
     public Savings(Money balance, Integer secretKey, AccountHolders primaryOwner, AccountHolders secondaryOwner){
         super(balance, secretKey, primaryOwner, secondaryOwner);
         this.interestRate = new BigDecimal("0.0025");
-        super.setMonthlyMaintenanceFee(new Money(new BigDecimal("0")));
+        super.setMonthlyMaintenanceFee(new BigDecimal("0"));
         this.setMinimumBalance(minimumBalance);
         this.createDate = LocalDate.now();
     }
@@ -62,11 +59,12 @@ public class Savings extends Checking{
     }
 
     @Override
-    public void setMinimumBalance(Money minimumBalance) throws MinimumBalanceException {
+    public void setMinimumBalance(BigDecimal minimumBalance) throws MinimumBalanceException {
         BigDecimal max = new BigDecimal("1000");
         BigDecimal min = new BigDecimal("100");
-        Integer valMax = max.compareTo(minimumBalance.getAmount());
-        Integer valMin = min.compareTo(minimumBalance.getAmount());
+        Money mBalance = new Money(minimumBalance);
+        Integer valMax = max.compareTo(mBalance.getAmount());
+        Integer valMin = min.compareTo(mBalance.getAmount());
         if (valMax == 1 || valMin == -1) throw new MinimumBalanceException("The minimum balance must be between 100 and 1000");
         this.minimumBalance = minimumBalance;
     }

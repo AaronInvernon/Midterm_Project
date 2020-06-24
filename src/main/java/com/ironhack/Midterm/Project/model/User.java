@@ -1,7 +1,10 @@
 package com.ironhack.Midterm.Project.model;
 
+import javax.persistence.Transient;
+
 public abstract class User {
     private String name;
+    @Transient
     private boolean logged;
 
     public void login(){

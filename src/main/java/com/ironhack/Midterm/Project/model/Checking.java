@@ -11,18 +11,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Checking {
 
     @Id
     @GeneratedValue
     private Integer id;
+    @Embedded
     protected Money balance;
     private Integer secretKey;
+    @ManyToOne(fetch=FetchType.LAZY)
     private AccountHolders primaryOwner;
+    @ManyToOne(fetch=FetchType.LAZY)
     private AccountHolders secondaryOwner;
-    protected Money minimumBalance;
-    private final Money penaltyFee = new Money(new BigDecimal("40"));
-    private Money monthlyMaintenanceFee;
+    protected BigDecimal minimumBalance;
+    private final BigDecimal penaltyFee = new BigDecimal("40");
+    private BigDecimal monthlyMaintenanceFee;
     @Enumerated(EnumType.STRING)
     private Status status;
     @ManyToOne()
@@ -39,8 +43,8 @@ public class Checking {
         this.secretKey = secretKey;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
-        this.minimumBalance = new Money(new BigDecimal("250"));
-        this.monthlyMaintenanceFee = new Money(new BigDecimal("12"));
+        this.minimumBalance = new BigDecimal("250");
+        this.monthlyMaintenanceFee = new BigDecimal("12");
         this.status = Status.ACTIVE;
     }
 
@@ -91,19 +95,19 @@ public class Checking {
         this.secondaryOwner = secondaryOwner;
     }
 
-    public Money getMinimumBalance() {
+    public BigDecimal getMinimumBalance() {
         return minimumBalance;
     }
 
-    public void setMinimumBalance(Money minimumBalance){
+    public void setMinimumBalance(BigDecimal minimumBalance){
         this.minimumBalance = minimumBalance;
     }
 
-    public Money getMonthlyMaintenanceFee() {
+    public BigDecimal getMonthlyMaintenanceFee() {
         return monthlyMaintenanceFee;
     }
 
-    public void setMonthlyMaintenanceFee(Money monthlyMaintenanceFee) {
+    public void setMonthlyMaintenanceFee(BigDecimal monthlyMaintenanceFee) {
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
     }
 
@@ -115,7 +119,7 @@ public class Checking {
         this.status = status;
     }
 
-    public Money getPenaltyFee() {
+    public BigDecimal getPenaltyFee() {
         return penaltyFee;
     }
 
@@ -141,9 +145,9 @@ public class Checking {
 
     public void debit(Money m){
         BigDecimal balanceSubtracted = this.balance.getAmount().subtract(m.getAmount());
-        if (m.getAmount().compareTo(this.balance.getAmount()) == 1 ||
-            balanceSubtracted.subtract(this.penaltyFee.getAmount()).compareTo(new BigDecimal("0"))<0) throw new DebitException("The balance isn't enough");
-        if(balanceSubtracted.compareTo(this.minimumBalance.getAmount()) == -1){
+        Money mBalance = new Money(this.minimumBalance);
+        if (m.getAmount().compareTo(this.balance.getAmount()) == 1) throw new DebitException("The balance isn't enough");
+        if(balanceSubtracted.compareTo(mBalance.getAmount()) == -1 && this.balance.getAmount().compareTo(mBalance.getAmount()) == 1){
             this.balance.decreaseAmount(this.penaltyFee);
         }
         this.balance.decreaseAmount(m);

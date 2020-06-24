@@ -1,6 +1,5 @@
 package com.ironhack.Midterm.Project.model;
 
-import com.ironhack.Midterm.Project.enums.Status;
 import com.ironhack.Midterm.Project.exceptions.CreditCardLimitException;
 import com.ironhack.Midterm.Project.exceptions.InsterestRateException;
 
