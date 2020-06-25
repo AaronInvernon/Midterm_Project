@@ -13,17 +13,9 @@ public class ThirdParty extends User{
     private Integer id;
     private String hashKey;
 
-    public ThirdParty(String name, boolean logged, String hashKey) {
-        super(name, logged);
+    public ThirdParty(String name, boolean logged, String username, String password, String hashKey) {
+        super(name, logged, username, password);
         this.hashKey = hashKey;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getHashKey() {

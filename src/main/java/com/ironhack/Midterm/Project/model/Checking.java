@@ -15,7 +15,7 @@ import java.util.List;
 public class Checking {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Embedded
     protected Money balance;
@@ -33,6 +33,8 @@ public class Checking {
     private AccountHolders primaryOwners;
     @ManyToOne()
     private AccountHolders secondaryOwners;
+    @OneToMany(mappedBy="account", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
+    private List<Transaction> transactions = new ArrayList<>();
 
 
     public Checking() {

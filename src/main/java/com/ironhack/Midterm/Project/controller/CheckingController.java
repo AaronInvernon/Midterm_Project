@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -24,17 +25,15 @@ public class CheckingController {
         return checkingService.create(accountHolderId, checkingPrimaryOwner);
     }
 
-    @GetMapping("/account/checkings")
-    @ResponseStatus(HttpStatus.OK)
-    public List<Checking> findAll(){
-        return checkingService.findAll();
-    }
-
     @GetMapping("/account/checking/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Checking findById(@PathVariable Integer id){
         return checkingService.findById(id);
     }
+
+    @GetMapping("/account/checking/{id}/balance")
+    @ResponseStatus(HttpStatus.OK)
+    public BigDecimal findBalanceById(@PathVariable Integer id) { return checkingService.findBalanceById(id); }
 
     @PostMapping("/account/checking/{id}/credit")
     @ResponseStatus(HttpStatus.OK)
@@ -48,8 +47,8 @@ public class CheckingController {
         checkingService.debit(id,amount);
     }
 
-    @PostMapping("/account/{id}/(transference")
-    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/account/{id}/transference")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void makeTransference(@RequestBody Transference transference,@PathVariable Integer senderId){
         checkingService.makeTransference(transference, senderId);
     }

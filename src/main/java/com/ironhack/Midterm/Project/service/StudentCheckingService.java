@@ -20,6 +20,10 @@ public class StudentCheckingService {
         return studentCheckingRepository.findById(id).orElseThrow(()-> new DataNotFoundException("Student checking account not found"));
     }
 
+    public BigDecimal findBalanceById(Integer id){
+        return findById(id).getBalance().getAmount();
+    }
+
     public void credit(Integer id,String amount){
         StudentChecking sc = findById(id);
         Money m = new Money(new BigDecimal(amount));

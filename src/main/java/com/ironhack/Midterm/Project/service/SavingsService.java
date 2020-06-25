@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class SavingsService {
@@ -17,6 +18,10 @@ public class SavingsService {
 
     public Savings findById(Integer id){
         return savingsRepository.findById(id).orElseThrow(()-> new DataNotFoundException("Saving account not found"));
+    }
+
+    public BigDecimal findBalanceById(Integer id){
+        return findById(id).getBalance().getAmount();
     }
 
     public Savings create(Savings s, String interestRate, String minimumBalance){

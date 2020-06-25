@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+
 @RestController
 public class StudentCheckingController {
     @Autowired
@@ -15,6 +17,12 @@ public class StudentCheckingController {
     @ResponseStatus(HttpStatus.OK)
     public StudentChecking findById(@PathVariable Integer id){
         return studentCheckingService.findById(id);
+    }
+
+    @GetMapping("/account/studentChecking/{id}/balance")
+    @ResponseStatus(HttpStatus.OK)
+    public BigDecimal findBalanceById(@PathVariable Integer id){
+        return studentCheckingService.findBalanceById(id);
     }
 
     @PostMapping("/account/studentChecking/{id}/credit")

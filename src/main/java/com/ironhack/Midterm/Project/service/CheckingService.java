@@ -7,6 +7,7 @@ import com.ironhack.Midterm.Project.model.*;
 import com.ironhack.Midterm.Project.repository.AccountHoldersRepository;
 import com.ironhack.Midterm.Project.repository.CheckingRepository;
 import com.ironhack.Midterm.Project.repository.StudentCheckingRepository;
+import com.ironhack.Midterm.Project.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,15 @@ public class CheckingService {
     private AccountHoldersRepository accountHoldersRepository;
     @Autowired
     private StudentCheckingRepository studentCheckingRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     private AccountHolders accountHolder;
     private AccountHolders secondaryOwner;
     private LocalDate today;
     private StudentChecking newStudentChecking;
     private Checking newChecking;
+    private Transaction t;
 
     public Checking create(Integer accountHolderId, CheckingPrimaryOwner checking) throws DataNotFoundException {
         today = LocalDate.now();
@@ -57,18 +61,26 @@ public class CheckingService {
         return checkingRepository.findById(id).orElseThrow(()-> new DataNotFoundException("Checking not found"));
     }
 
+    public BigDecimal findBalanceById(Integer id){
+        return findById(id).getBalance().getAmount();
+    }
+
     public void credit(Integer id,String amount){
         Checking c = findById(id);
         Money m = new Money(new BigDecimal(amount));
         c.credit(m);
+        t = new Transaction(c.getPrimaryOwner(), c);
         checkingRepository.save(c);
+        transactionRepository.save(t);
     }
 
     public void debit(Integer id,String amount){
         Checking c = findById(id);
         Money m = new Money(new BigDecimal(amount));
         c.debit(m);
+        t = new Transaction(c.getPrimaryOwner(), c);
         checkingRepository.save(c);
+        transactionRepository.save(t);
     }
 
     @Transactional
@@ -84,6 +96,7 @@ public class CheckingService {
 
             checkingRepository.save(checkingReceiver);
             checkingRepository.save(checkingSender);
+            transactionRepository.save(t);
         }
 
     }

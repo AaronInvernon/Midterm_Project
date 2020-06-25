@@ -24,19 +24,10 @@ public class AccountHolders extends User{
     @OneToMany(mappedBy="secondaryOwners", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
     private List<Checking> secondaryOwners = new ArrayList<>();
 
-    public AccountHolders(String name, boolean logged, LocalDate dateOfBirth, Address address, Address mailingAddress) {
-        super(name, logged);
+    public AccountHolders(String name, boolean logged, String username, String password, LocalDate dateOfBirth, Address address) {
+        super(name, logged, username, password);
         this.dateOfBirth = dateOfBirth;
         this.address = address;
-        this.mailingAddress = mailingAddress;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public LocalDate getDateOfBirth() {

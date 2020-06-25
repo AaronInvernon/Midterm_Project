@@ -20,6 +20,10 @@ public class SavingsController {
         return savingsService.findById(id);
     }
 
+    @GetMapping("/account/saving/{id}/balance")
+    @ResponseStatus(HttpStatus.OK)
+    public BigDecimal findBalanceById(@PathVariable Integer id){ return  savingsService.findBalanceById(id); }
+
     @PostMapping("/account/saving")
     @ResponseStatus(HttpStatus.CREATED)
     public Savings create(Savings s, @RequestParam(required = false) String interestRate, @RequestParam(required = false) String minimumBalance){
@@ -27,7 +31,7 @@ public class SavingsController {
     }
 
     @PostMapping("/account/saving/{id}/credit")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void credit(@RequestBody String amount, @PathVariable Integer id){
         savingsService.credit(id, amount);
     }

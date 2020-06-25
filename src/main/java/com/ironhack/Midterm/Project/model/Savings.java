@@ -13,7 +13,7 @@ import java.time.Period;
 public class Savings extends Checking{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     protected BigDecimal interestRate;
     protected LocalDate createDate;

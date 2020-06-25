@@ -12,15 +12,7 @@ public class Admin extends User{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    public Admin(String name, boolean logged) {
-        super(name, logged);
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public Admin(String name, boolean logged, String username, String password) {
+        super(name, logged, username, password);
     }
 }

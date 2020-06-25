@@ -4,6 +4,7 @@ import com.ironhack.Midterm.Project.exceptions.CreditCardLimitException;
 import com.ironhack.Midterm.Project.exceptions.InsterestRateException;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.time.Period;
 
 public class CreditCard extends Savings{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Money creditLimit;
 

@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class StudentChecking extends Checking{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     public StudentChecking(Money balance, Integer secretKey, AccountHolders primaryOwner, AccountHolders secondaryOwner) {
