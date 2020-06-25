@@ -1,7 +1,7 @@
 package com.ironhack.Midterm.Project.controller;
 
-import com.ironhack.Midterm.Project.model.ThirdParty;
-import com.ironhack.Midterm.Project.service.ThirdPartyService;
+import com.ironhack.Midterm.Project.model.Admin;
+import com.ironhack.Midterm.Project.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class ThirdPartyController {
+public class AdminController {
 
     @Autowired
-    private ThirdPartyService thirdPartyService;
+    private AdminService adminService;
 
-    @PostMapping("/user/thirdParty")
+    @PostMapping("/user/admin")
     @ResponseStatus(HttpStatus.CREATED)
-    public ThirdParty create(@RequestBody ThirdParty t){ return thirdPartyService.create(t); }
+    public Admin create(@RequestBody Admin admin){ return adminService.create(admin); }
 }

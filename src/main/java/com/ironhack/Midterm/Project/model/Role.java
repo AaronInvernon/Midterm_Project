@@ -11,19 +11,23 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String role;
 
     @ManyToOne
     @JsonIgnore
     private User user;
 
+    public Role(String role, User user) {
+        this.role = role;
+        this.user = user;
+    }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

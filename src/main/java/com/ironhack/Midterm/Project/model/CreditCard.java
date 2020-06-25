@@ -3,17 +3,14 @@ package com.ironhack.Midterm.Project.model;
 import com.ironhack.Midterm.Project.exceptions.CreditCardLimitException;
 import com.ironhack.Midterm.Project.exceptions.InsterestRateException;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
 
+@Entity
 public class CreditCard extends Savings{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
     private Money creditLimit;
 
     public CreditCard(Money balance, Integer secretKey, AccountHolders primaryOwner, AccountHolders secondaryOwner){
@@ -36,15 +33,6 @@ public class CreditCard extends Savings{
         this.creditLimit = creditLimit;
     }
 
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     @Override
     public void setInterestRate(BigDecimal interestRate) throws InsterestRateException{
@@ -62,6 +50,7 @@ public class CreditCard extends Savings{
 
         for(Integer months = Period.between(this.createDate, today).getMonths(); months > 0; months--){
             this.setBalance(new Money(this.getBalance().increaseAmount(this.getBalance().getAmount().multiply(interestRate))));
+            setCreateDate(today);
         }
         return this.balance;
     }

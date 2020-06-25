@@ -154,4 +154,12 @@ public class Checking {
         }
         this.balance.decreaseAmount(m);
     }
+
+    public void freeze(){
+        this.status = Status.FROZEN;
+    }
+
+    public void unFreeze(){
+        this.status = Status.ACTIVE;
+    }
 }

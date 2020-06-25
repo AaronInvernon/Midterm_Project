@@ -1,7 +1,9 @@
 package com.ironhack.Midterm.Project.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,6 +15,7 @@ public abstract class User {
     private boolean logged;
     private String username;
     private String password;
+    private boolean access;
     @OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL, mappedBy="user")
     private Set<Role> roles = new HashSet<>();
 
@@ -80,6 +83,15 @@ public abstract class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public boolean isAccess()  {
+        return access;
+    }
+
+    public void setAccess(boolean access) {
+        this.access = access;
+    }
+
 
     @Override
     public String toString() {

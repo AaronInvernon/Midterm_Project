@@ -34,4 +34,19 @@ public class GlobalHandler{
     public void handleDebitException(DebitException e, HttpServletResponse response)  throws IOException {
         response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
     }
+
+    @ExceptionHandler(NotLoggedException.class)
+    public void NotLoggedException(NotLoggedException e, HttpServletResponse response)  throws IOException {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(NoAccessException.class)
+    public void NoAccessException(NoAccessException e, HttpServletResponse response)  throws IOException {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(FraudException.class)
+    public void handleFraudException(FraudException e, HttpServletResponse response)  throws IOException {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+    }
 }

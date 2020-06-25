@@ -12,9 +12,6 @@ import java.time.Period;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Savings extends Checking{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     protected BigDecimal interestRate;
     protected LocalDate createDate;
 
@@ -25,16 +22,6 @@ public class Savings extends Checking{
         super.setMonthlyMaintenanceFee(new BigDecimal("0"));
         this.setMinimumBalance(minimumBalance);
         this.createDate = LocalDate.now();
-    }
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public BigDecimal getInterestRate() {
@@ -75,6 +62,7 @@ public class Savings extends Checking{
 
         for(Integer years = Period.between(this.createDate, today).getYears(); years > 0; years--){
             credit(new Money(this.getBalance().getAmount().multiply(interestRate)));
+            setCreateDate(today);
         }
         return this.balance;
     }

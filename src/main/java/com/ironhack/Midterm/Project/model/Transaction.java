@@ -9,13 +9,11 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private User userId;
     @ManyToOne()
     private Checking account;
     private LocalDate date;
 
-    public Transaction(User userId, Checking account) {
-        this.userId = userId;
+    public Transaction(Checking account) {
         this.account = account;
         this.date = LocalDate.now();
     }
@@ -34,14 +32,6 @@ public class Transaction {
 
     public void setAccount(Checking account) {
         this.account = account;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
     }
 
     public LocalDate getDate() {
