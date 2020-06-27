@@ -8,14 +8,14 @@ import javax.persistence.Id;
 @Entity
 public class ThirdParty extends User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String hashKey;
 
-    public ThirdParty(String name, boolean logged, String username, String password, String hashKey) {
-        super(name, logged, username, password);
+    public ThirdParty(String name, String username, String password, String hashKey) {
+        super(name, username, password);
         this.hashKey = hashKey;
+    }
+
+    public ThirdParty() {
     }
 
     public String getHashKey() {

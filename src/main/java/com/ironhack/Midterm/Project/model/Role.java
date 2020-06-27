@@ -14,13 +14,16 @@ public class Role {
     private Integer id;
     private String role;
 
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
     private User user;
 
     public Role(String role, User user) {
         this.role = role;
         this.user = user;
+    }
+
+    public Role() {
     }
 
     public Integer getId() {

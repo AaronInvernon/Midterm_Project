@@ -16,31 +16,11 @@ public class SavingsService {
     @Autowired
     private SavingsRepository savingsRepository;
 
-    public Savings findById(Integer id){
-        return savingsRepository.findById(id).orElseThrow(()-> new DataNotFoundException("Saving account not found"));
-    }
-
-    public BigDecimal findBalanceById(Integer id){
-        return findById(id).getBalance().getAmount();
-    }
-
     public Savings create(Savings s, String interestRate, String minimumBalance){
         if(interestRate != null)s.setInterestRate(new BigDecimal(interestRate));
         if(minimumBalance != null)s.setMinimumBalance(new BigDecimal(minimumBalance));
         return savingsRepository.save(s);
     }
 
-    public void credit(Integer id,String amount){
-        Savings s = findById(id);
-        Money m = new Money(new BigDecimal(amount));
-        s.credit(m);
-        savingsRepository.save(s);
-    }
 
-    public void debit(Integer id,String amount){
-        Savings s = findById(id);
-        Money m = new Money(new BigDecimal(amount));
-        s.debit(m);
-        savingsRepository.save(s);
-    }
 }

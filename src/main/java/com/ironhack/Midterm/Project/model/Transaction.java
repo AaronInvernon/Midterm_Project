@@ -11,11 +11,14 @@ public class Transaction {
     private Integer id;
     @ManyToOne()
     private Checking account;
-    private LocalDate date;
+    private LocalDate dateAt;
 
     public Transaction(Checking account) {
         this.account = account;
-        this.date = LocalDate.now();
+        this.dateAt = LocalDate.now();
+    }
+
+    public Transaction() {
     }
 
     public Integer getId() {
@@ -35,10 +38,10 @@ public class Transaction {
     }
 
     public LocalDate getDate() {
-        return date;
+        return dateAt;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDate(LocalDate dateAt) {
+        this.dateAt = dateAt;
     }
 }

@@ -19,16 +19,9 @@ public abstract class User {
     @OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL, mappedBy="user")
     private Set<Role> roles = new HashSet<>();
 
-    public void login(){
-        this.logged = true;
-    }
-    public void logout(){
-        this.logged = false;
-    }
-
-    public User(String name, boolean logged, String username, String password) {
+    public User(String name, String username, String password) {
         this.name = name;
-        this.logged = logged;
+        this.logged = false;
         this.username = username;
         this.password = password;
     }
@@ -56,8 +49,11 @@ public abstract class User {
         return logged;
     }
 
-    public void setLogged(boolean logged) {
-        this.logged = logged;
+    public void login(){
+        this.logged = true;
+    }
+    public void logout(){
+        this.logged = false;
     }
 
     public String getUsername() {

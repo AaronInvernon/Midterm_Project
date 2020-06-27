@@ -1,5 +1,6 @@
 package com.ironhack.Midterm.Project.repository;
 
+import com.ironhack.Midterm.Project.model.Checking;
 import com.ironhack.Midterm.Project.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,8 +14,9 @@ import java.util.Optional;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 
-    @Query("SELECT COUNT(t) FROM Transaction t WHERE t.account=:id AND t.date BETWEEN CURRENT_TIME AND :startOfDay")
+    @Query(value = "SELECT COUNT(*) FROM transaction WHERE account_id=:id AND date_at>=:startOfDay ORDER BY COUNT(*) LIMIT 1", nativeQuery = true)
     Integer todayTotal(@Param("id") Integer id, @Param("startOfDay") LocalDate startOfDay);
-    @Query(value = "SELECT COUNT(t) FROM transaction t WHERE CAST(t.date AS DATE)!=NOW() && account=:id GROUP BY CAST(t.date AS DATE), account ORDER BY COUNT(t) DESC LIMIT 1", nativeQuery = true)
-    Integer maxTotal(@Param("id") Integer id);
+    @Query(value = "SELECT COUNT(*) FROM transaction WHERE account_id=:id AND date_at<:startOfDay GROUP BY date_at ORDER BY COUNT(*) DESC LIMIT 1", nativeQuery = true)
+    Integer maxTotal(@Param("id") Integer id, @Param("startOfDay") LocalDate startOfDay);
 }
+

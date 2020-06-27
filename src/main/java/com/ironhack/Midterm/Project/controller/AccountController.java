@@ -13,13 +13,13 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
-    @PostMapping("/account/checking/{id}/credit")
+    @PostMapping("/account/{id}/credit")
     @ResponseStatus(HttpStatus.OK)
     public void credit(@AuthenticationPrincipal User user, @RequestBody String amount, @PathVariable Integer id){
         accountService.credit(user, id, amount);
     }
 
-    @PostMapping("/account/checking/{id}/debit")
+    @PostMapping("/account/{id}/debit")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void debit(@AuthenticationPrincipal User user, @RequestBody String amount, @PathVariable Integer id){
         accountService.debit(user, id,amount);

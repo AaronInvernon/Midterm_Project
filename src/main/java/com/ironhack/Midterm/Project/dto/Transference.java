@@ -4,31 +4,28 @@ import com.ironhack.Midterm.Project.model.Money;
 
 public class Transference {
 
-    private String senderName;
+    private String receiverName;
     private Integer receiverId;
     private Money amount;
 
-    public String getSenderName() {
-        return senderName;
+    public Transference(String receiverName, Integer receiverId, Money amount) {
+        this.receiverName = receiverName;
+        this.receiverId = receiverId;
+        this.amount = amount;
     }
 
-    public void setSenderName(String senderName) {
-        this.senderName = senderName;
+    public Transference() {
+    }
+
+    public String getReceiverName() {
+        return receiverName;
     }
 
     public Integer getReceiverId() {
         return receiverId;
     }
 
-    public void setReceiverId(Integer receiverId) {
-        this.receiverId = receiverId;
-    }
-
     public Money getAmount() {
         return amount;
-    }
-
-    public void setAmount(Money amount) {
-        this.amount = amount;
     }
 }

@@ -20,6 +20,16 @@ public class Money implements Transactional {
         this.currency = currency;
         setAmount(amount.setScale(currency.getDefaultFractionDigits(), rounding));
     }
+
+    public Money(Currency currency, BigDecimal amount) {
+        this.currency = currency;
+        this.amount = amount;
+    }
+
+    public Money() {
+        this.currency = USD;
+    }
+
     /**
      * Class constructor specifying amount, and currency. Uses default RoundingMode HALF_EVEN.
      **/

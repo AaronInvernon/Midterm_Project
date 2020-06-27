@@ -1,5 +1,6 @@
 package com.ironhack.Midterm.Project.service;
 
+import com.ironhack.Midterm.Project.Utils.PasswordUtility;
 import com.ironhack.Midterm.Project.model.Role;
 import com.ironhack.Midterm.Project.model.ThirdParty;
 import com.ironhack.Midterm.Project.repository.RoleRepository;
@@ -14,8 +15,9 @@ public class ThirdPartyService {
     @Autowired
     private ThirdPartyRepository thirdPartyRepository;
     public ThirdParty create(ThirdParty t){
-
+        t.setPassword(PasswordUtility.encryptPassword(t.getPassword()));
+        ThirdParty thirdParty = thirdPartyRepository.save(t);
         roleRepository.save(new Role("THIRD_PARTY", t));
-        return thirdPartyRepository.save(t);
+        return thirdParty;
     }
 }

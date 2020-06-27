@@ -54,10 +54,6 @@ public class CheckingService {
         return checkingRepository.save(newChecking);
     }
 
-    public List<Checking> findAll(){
-        return checkingRepository.findAll();
-    }
-
     public Checking findById(Integer id, User user){
         if(!user.isLogged()) throw new NotLoggedException("No user logged id");
         Checking c = checkingRepository.findById(id).orElseThrow(()-> new DataNotFoundException("Checking not found"));

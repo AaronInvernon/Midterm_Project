@@ -16,12 +16,15 @@ public class Savings extends Checking{
     protected LocalDate createDate;
 
 
-    public Savings(Money balance, Integer secretKey, AccountHolders primaryOwner, AccountHolders secondaryOwner){
-        super(balance, secretKey, primaryOwner, secondaryOwner);
+    public Savings(Money balance, Integer secretKey, AccountHolders primaryOwner){
+        super(balance, secretKey, primaryOwner);
         this.interestRate = new BigDecimal("0.0025");
         super.setMonthlyMaintenanceFee(new BigDecimal("0"));
         this.setMinimumBalance(minimumBalance);
         this.createDate = LocalDate.now();
+    }
+
+    public Savings() {
     }
 
     public BigDecimal getInterestRate() {
@@ -33,12 +36,8 @@ public class Savings extends Checking{
         Integer valMax = max.compareTo(interestRate);
         BigDecimal min = new BigDecimal("0");
         Integer valMin = min.compareTo(interestRate);
-        if (valMax == 1 || valMin == -1) throw new InsterestRateException("The interest rate must be between 0 and 0.5");
+        if (valMax == -1 || valMin == 1) throw new InsterestRateException("The interest rate must be between 0 and 0.5");
         this.interestRate = interestRate;
-    }
-
-    public LocalDate getCreateDate() {
-        return createDate;
     }
 
     public void setCreateDate(LocalDate createDate) {
@@ -52,7 +51,7 @@ public class Savings extends Checking{
         Money mBalance = new Money(minimumBalance);
         Integer valMax = max.compareTo(mBalance.getAmount());
         Integer valMin = min.compareTo(mBalance.getAmount());
-        if (valMax == 1 || valMin == -1) throw new MinimumBalanceException("The minimum balance must be between 100 and 1000");
+        if (valMax == -1 || valMin == 1) throw new MinimumBalanceException("The minimum balance must be between 100 and 1000");
         this.minimumBalance = minimumBalance;
     }
 

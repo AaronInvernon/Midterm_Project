@@ -49,4 +49,9 @@ public class GlobalHandler{
     public void handleFraudException(FraudException e, HttpServletResponse response)  throws IOException {
         response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
     }
+
+    @ExceptionHandler(FrozenAccountException.class)
+    public void handleFrozenAccountException(FrozenAccountException e, HttpServletResponse response)  throws IOException {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
+    }
 }

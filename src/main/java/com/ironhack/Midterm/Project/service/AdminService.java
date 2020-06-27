@@ -1,5 +1,6 @@
 package com.ironhack.Midterm.Project.service;
 
+import com.ironhack.Midterm.Project.Utils.PasswordUtility;
 import com.ironhack.Midterm.Project.model.Admin;
 import com.ironhack.Midterm.Project.model.Role;
 import com.ironhack.Midterm.Project.repository.AdminRepository;
@@ -16,7 +17,9 @@ public class AdminService {
     private AdminRepository adminRepository;
 
     public Admin create(Admin admin){
+        admin.setPassword(PasswordUtility.encryptPassword(admin.getPassword()));
+        Admin a = adminRepository.save(admin);
         roleRepository.save(new Role("ADMIN", admin));
-        return adminRepository.save(admin);
+        return a;
     }
 }

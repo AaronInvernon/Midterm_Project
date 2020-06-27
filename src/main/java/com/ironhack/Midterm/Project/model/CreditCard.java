@@ -13,10 +13,10 @@ public class CreditCard extends Savings{
 
     private Money creditLimit;
 
-    public CreditCard(Money balance, Integer secretKey, AccountHolders primaryOwner, AccountHolders secondaryOwner){
-        super(balance, secretKey, primaryOwner, secondaryOwner);
+    public CreditCard(Money balance, Integer secretKey, AccountHolders primaryOwner){
+        super(balance, secretKey, primaryOwner);
         this.creditLimit = new Money(new BigDecimal("100"));
-        this.setInterestRate(new BigDecimal("100"));
+        this.setInterestRate(new BigDecimal("0.2"));
     }
 
     public Money getCreditLimit() {
@@ -29,7 +29,7 @@ public class CreditCard extends Savings{
         Integer valMax = max.compareTo(creditLimit.getAmount());
         BigDecimal min = new BigDecimal("100");
         Integer valMin = min.compareTo(creditLimit.getAmount());
-        if (valMax == 1 || valMin == -1) throw new CreditCardLimitException("The limit credit card must be between 100 and 100000 ");
+        if (valMax == -1 || valMin == 1) throw new CreditCardLimitException("The limit credit card must be between 100 and 100000");
         this.creditLimit = creditLimit;
     }
 
@@ -40,7 +40,7 @@ public class CreditCard extends Savings{
         Integer valMax = max.compareTo(interestRate);
         BigDecimal min = new BigDecimal("0.1");
         Integer valMin = min.compareTo(interestRate);
-        if (valMax == 1 || valMin == -1) throw new InsterestRateException("The interest rate must be between 0.1 and 0.2");;
+        if (valMax == -1 || valMin == 1) throw new InsterestRateException("The interest rate must be between 0.1 and 0.2");
         this.interestRate = interestRate;
     }
 

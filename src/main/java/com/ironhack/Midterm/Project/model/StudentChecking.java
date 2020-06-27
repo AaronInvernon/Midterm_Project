@@ -14,4 +14,7 @@ public class StudentChecking extends Checking{
     public StudentChecking(Money balance, Integer secretKey, AccountHolders primaryOwner) {
         super(balance, secretKey, primaryOwner, null);
     }
+
+    public StudentChecking() {
+    }
 }

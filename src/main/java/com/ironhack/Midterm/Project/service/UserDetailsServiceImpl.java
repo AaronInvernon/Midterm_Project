@@ -18,9 +18,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public User findById(Integer id){ return userRepo.findById(id).orElseThrow(()-> new DataNotFoundException("User not found"));}
 
-    public void login(Integer id){ findById(id).login(); }
+    public void login(Integer id){
+        User u = findById(id);
+        u.login();
+        userRepo.save(u);
+    }
 
-    public void logout(Integer id){ findById(id).logout(); }
+    public void logout(Integer id){
+        User u = findById(id);
+        u.logout();
+        userRepo.save(u);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

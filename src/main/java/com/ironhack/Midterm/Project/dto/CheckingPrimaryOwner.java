@@ -27,19 +27,22 @@ public class CheckingPrimaryOwner {
     private Status status;
     private LocalDate creationDate;
 
-    public CheckingPrimaryOwner(Money balance, Integer secretKey, AccountHolders primaryOwner, AccountHolders secondaryOwner, Status status) {
+    public CheckingPrimaryOwner(Money balance, Integer secretKey, AccountHolders primaryOwner, AccountHolders secondaryOwner) {
             this.balance = balance;
             this.secretKey = secretKey;
             this.primaryOwner = primaryOwner;
             this.secondaryOwner = secondaryOwner;
             this.minimumBalance = new Money(new BigDecimal("250"));
             this.monthlyMaintenanceFee = new Money(new BigDecimal("12"));
-            this.status = status;
+            this.status = Status.ACTIVE;
             this.creationDate = LocalDate.now();
     }
 
-    public CheckingPrimaryOwner(Money balance, Integer secretKey, AccountHolders primaryOwner, Status status) {
-        this(balance, secretKey, primaryOwner, null, status);
+    public CheckingPrimaryOwner(Money balance, Integer secretKey, AccountHolders primaryOwner) {
+        this(balance, secretKey, primaryOwner, null);
+    }
+
+    public CheckingPrimaryOwner() {
     }
 
     public Integer getId() {
@@ -78,36 +81,8 @@ public class CheckingPrimaryOwner {
         return secondaryOwner;
     }
 
-    public void setSecondaryOwner(AccountHolders secondaryOwner) {
-        this.secondaryOwner = secondaryOwner;
-    }
-
-    public Money getMinimumBalance() {
-        return minimumBalance;
-    }
-
-    public void setMinimumBalance(Money minimumBalance) {
-        this.minimumBalance = minimumBalance;
-    }
-
-    public Money getPenaltyFee() {
-        return penaltyFee;
-    }
-
-    public Money getMonthlyMaintenanceFee() {
-        return monthlyMaintenanceFee;
-    }
-
     public void setMonthlyMaintenanceFee(Money monthlyMaintenanceFee) {
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public LocalDate getCreationDate() {
