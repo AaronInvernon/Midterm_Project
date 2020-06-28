@@ -28,7 +28,7 @@ public class AccountController {
 
 
     @PostMapping("/account/{id}/credit")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void credit(@AuthenticationPrincipal User user, @RequestBody String amount, @PathVariable Integer id){
         accountService.credit(user, id, amount);
     }

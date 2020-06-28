@@ -37,17 +37,40 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity httpSecurity) throws Exception {
 
-
+/** ROLE_THIRD_PARTY, ROLE_ACCOUNT_HOLDER, ROLE_ADMIN
+ *
+ * /account/{id} --GET
+ * /account/{id}/balance --GET
+ * /account/{id}/credit --POST
+ * /account/{id}/debit --POST
+ * /account/{id}/transference --POST
+ *
+ * /user/accountHolder  --POST
+ * /user/admin          --POST
+ * /user/thirdParty     --POST
+ *
+ * /account/checking/{id}  --POST
+ * /account/creditCard     --POST
+ * /account/saving         --POST
+ *
+ * /user/{id}/login --POST
+ * /user/{id}/logout --POST
+ * **/
         httpSecurity.csrf().disable();
-
         httpSecurity.headers().frameOptions().disable();
 
         httpSecurity.authorizeRequests()
-                .mvcMatchers(HttpMethod.POST, "/salesrep/save/**").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers(HttpMethod.GET, "/salerep/find_by_id/{id}").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers(HttpMethod.GET, "/salesreps").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers(HttpMethod.GET, "/leads/find_by_salesrep").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers(HttpMethod.GET, "/lead/convert**").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/user/accountHolder").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/user/admin").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/user/thirdParty").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.GET, "/account/{id}").hasAnyAuthority("ROLE_ADMIN", "ROLE_ACCOUNT_HOLDER")
+                .mvcMatchers(HttpMethod.GET, "/account/{id}/balance").hasAnyAuthority("ROLE_ADMIN", "ROLE_ACCOUNT_HOLDER")
+                .mvcMatchers(HttpMethod.POST, "/account/{id}/credit").hasAnyAuthority("ROLE_ADMIN", "ROLE_ACCOUNT_HOLDER", "ROLE_THIRD_PARTY")
+                .mvcMatchers(HttpMethod.POST, "/account/{id}/debit").hasAnyAuthority("ROLE_ADMIN", "ROLE_ACCOUNT_HOLDER", "ROLE_THIRD_PARTY")
+                .mvcMatchers(HttpMethod.POST, "/account/{id}/transference").hasAnyAuthority("ROLE_ADMIN", "ROLE_ACCOUNT_HOLDER")
+                .mvcMatchers(HttpMethod.POST, "/account/checking/{id}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/account/creditCard").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/account/saving").hasAuthority("ROLE_ADMIN")
                 .anyRequest().permitAll();
 
     }

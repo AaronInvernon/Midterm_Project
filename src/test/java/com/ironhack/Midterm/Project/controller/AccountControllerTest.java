@@ -3,6 +3,7 @@ package com.ironhack.Midterm.Project.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.Midterm.Project.dto.CheckingPrimaryOwner;
+import com.ironhack.Midterm.Project.dto.Transference;
 import com.ironhack.Midterm.Project.model.*;
 import com.ironhack.Midterm.Project.service.AccountHoldersService;
 import com.ironhack.Midterm.Project.service.AccountService;
@@ -42,6 +43,8 @@ class AccountControllerTest {
     private Savings savings;
 
     private MockMvc mockMvc;
+    private String amount;
+    private Transference transference;
 
     @BeforeEach
     void setUp() {
@@ -50,6 +53,8 @@ class AccountControllerTest {
         savings.setId(1);
         when(accountService.findById(any(), any())).thenReturn(savings);
         when(accountService.findBalanceById(any(), any())).thenReturn(savings.getBalance().getAmount());
+        amount = "100";
+        transference = new Transference();
     }
 
 
@@ -73,26 +78,31 @@ class AccountControllerTest {
                 .andExpect(status().isOk());
     }
 
-/*    @Test
+   @Test
     @WithMockUser(username = "user", password = "user")
     void credit() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        mockMvc.perform(post("/account/checking/1/credit")
+       ObjectMapper objectMapper = new ObjectMapper();
+        mockMvc.perform(post("/account/1/credit")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(balance)))
-                .andExpect(status().isOk());
+                .content(objectMapper.writeValueAsString(amount)))
+                .andExpect(status().isNoContent());
     }
 
     @Test
     void debit() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
-        mockMvc.perform(post("/account/checking/1/debit")
+        mockMvc.perform(post("/account/1/debit")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(balance)))
-                .andExpect(status().isOk());
-    }*/
+                .content(objectMapper.writeValueAsString(amount)))
+                .andExpect(status().isNoContent());
+    }
 
     @Test
-    void makeTransference() {
+    void makeTransference() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        mockMvc.perform(post("/account/1/transference")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(transference)))
+                .andExpect(status().isNoContent());
     }
 }

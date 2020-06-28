@@ -11,7 +11,7 @@ import java.io.IOException;
 public class GlobalHandler{
 
     @ExceptionHandler(CreditCardLimitException.class)
-    public void handleDataNotFoundException(CreditCardLimitException e, HttpServletResponse response)  throws IOException {
+    public void handleCreditCardLimitException(CreditCardLimitException e, HttpServletResponse response)  throws IOException {
         response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
     }
 

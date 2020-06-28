@@ -26,6 +26,11 @@ class GlobalHandlerTest {
         globalHandler.handleDataNotFoundException(new DataNotFoundException("DataNotFound"), response);
         assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
     }
+    @Test
+    void handleCreditCardLimitException() throws IOException {
+        globalHandler.handleCreditCardLimitException(new CreditCardLimitException("DataNotFound"), response);
+        assertEquals(HttpStatus.NOT_FOUND.value(), response.getStatus());
+    }
 
     @Test
     void handleInsterestRateException() throws IOException {

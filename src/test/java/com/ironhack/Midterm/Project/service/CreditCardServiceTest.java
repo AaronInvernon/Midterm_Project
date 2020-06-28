@@ -11,16 +11,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class SavingsServiceTest {
+class CreditCardServiceTest {
 
     @Autowired
-    private SavingsService savingsService;
+    private CreditCardService creditCardService;
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
@@ -31,7 +29,7 @@ class SavingsServiceTest {
     private CheckingService checkingService;
     private AccountHolders accH;
     private AccountHolders a;
-    private Savings s;
+    private CreditCard cc;
 
     @BeforeEach
     void setUp() {
@@ -45,8 +43,8 @@ class SavingsServiceTest {
         accH.setDateOfBirth(dateOfBirth);
         accH.setAddress(address);
         a = accountHoldersService.create(accH);
-        s = new Savings(new Money(new BigDecimal("200")), 123456, a);
-        savingsService.create(s, null, null);
+        cc = new CreditCard(new Money(new BigDecimal("200")), 123456, a);
+        creditCardService.create(cc, null, null);
 
     }
 
@@ -54,12 +52,12 @@ class SavingsServiceTest {
     @Test
     void create_MinimumBalanceException() {
         a.login();
-        assertThrows(MinimumBalanceException.class, () ->s.setMinimumBalance(new BigDecimal("10")));
+        assertThrows(MinimumBalanceException.class, () ->cc.setMinimumBalance(new BigDecimal("10")));
     }
 
     @Test
     void create_InsterestRateException() {
         a.login();
-        assertThrows(InsterestRateException.class, () ->s.setInterestRate(new BigDecimal("1")));
+        assertThrows(InsterestRateException.class, () ->cc.setInterestRate(new BigDecimal("1")));
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
     @Id
     @GeneratedValue
@@ -22,6 +23,7 @@ public abstract class User {
     public User(String name, String username, String password) {
         this.name = name;
         this.logged = false;
+        this.access = false;
         this.username = username;
         this.password = password;
     }
