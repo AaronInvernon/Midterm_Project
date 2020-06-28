@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,7 +47,12 @@ class SavingsServiceTest {
         a = accountHoldersService.create(accH);
         s = new Savings(new Money(new BigDecimal("200")), 123456, a);
         savingsService.create(s, null, null);
-
+        /** private Integer id;
+         private Integer postCode;
+         private String street;
+         private Short portalNumber;
+         private Short floor;
+         private String door;*/
     }
 
 

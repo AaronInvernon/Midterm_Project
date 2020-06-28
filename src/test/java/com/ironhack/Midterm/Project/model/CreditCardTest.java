@@ -3,6 +3,7 @@ package com.ironhack.Midterm.Project.model;
 import com.ironhack.Midterm.Project.exceptions.CreditCardLimitException;
 import com.ironhack.Midterm.Project.exceptions.InsterestRateException;
 import com.ironhack.Midterm.Project.repository.AddressRepository;
+import com.ironhack.Midterm.Project.repository.CreditCardRepository;
 import com.ironhack.Midterm.Project.service.AccountHoldersService;
 import com.ironhack.Midterm.Project.service.AccountService;
 import com.ironhack.Midterm.Project.service.CheckingService;
@@ -26,6 +27,8 @@ class CreditCardTest {
     private AccountHoldersService accountHoldersService;
     @Autowired
     private CheckingService checkingService;
+    @Autowired
+    private CreditCardRepository creditCardRepository;
     private AccountHolders accH;
     private AccountHolders a;
     private Savings s;
@@ -46,6 +49,7 @@ class CreditCardTest {
         a = accountHoldersService.create(accH);
         creditCard = new CreditCard(new Money(new BigDecimal("100")), 123456, a);
     }
+
 
     @Test
     void setCreditLimit_CreditCardLimitException() {

@@ -123,7 +123,7 @@ class AccountServiceTest {
     @Test
     void credit_FrozenAccountException() {
         c2.freeze();
-        System.out.println("");
+        System.out.println("STATUS-> "+ c2.getStatus());
         assertThrows(FrozenAccountException.class, ()-> accountService.credit(admin, c.getId(), "100"));
     }
 

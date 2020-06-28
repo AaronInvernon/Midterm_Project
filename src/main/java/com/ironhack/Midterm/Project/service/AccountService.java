@@ -42,6 +42,10 @@ public class AccountService {
         return c;
     }
 
+    public BigDecimal findBalanceById(User user, Integer id){
+        return findById(id, user).getBalance().getAmount();
+    }
+
     public void saveAccount(Checking account){
         if(account instanceof CreditCard) creditCardRepository.save((CreditCard)account);
         if(account instanceof Savings) savingsService.create((Savings)account, null, null);

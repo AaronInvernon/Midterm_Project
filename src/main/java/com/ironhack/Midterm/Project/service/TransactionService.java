@@ -23,9 +23,12 @@ public class TransactionService {
     private AccountService accountService;
 
     public void isFraud(Checking account) {
+        Transaction lastTransaction = transactionRepository.findLastTransaction(account.getId());
+        Long time = lastTransaction==null ? 2 : Duration.between(lastTransaction.getDate(), LocalDateTime.now()).toSeconds();
+        if(time<=1) throw new FraudException("The account is now frozen because a possible fraud has been detected");
         Integer today = transactionRepository.todayTotal(account.getId(), LocalDate.now().atStartOfDay().toLocalDate());
         Integer defaultMax = transactionRepository.maxTotal(account.getId(), LocalDate.now().atStartOfDay().toLocalDate());
-        double max = defaultMax==null ? 2 : (Math.max(defaultMax, 2)*1.5);
+        double max = defaultMax==null ? 3 : (Math.max(defaultMax, 2)*1.5);
         if (today > max) {
             account.freeze();
             accountService.saveAccount(account);
@@ -33,10 +36,4 @@ public class TransactionService {
         }
     }
 
-    public boolean fraudTransactionBySeconds(Checking account, LocalDateTime now){
-        /*List<Transaction> transactionList = transactionRepository.findLastTransaction(account.getId());
-        if(transactionList.isEmpty()) return false;
-        Duration duration = Duration.between(transactionList.get(0).getDate(), now);
-        return duration.toSeconds() <=1;*/
-    }
 }

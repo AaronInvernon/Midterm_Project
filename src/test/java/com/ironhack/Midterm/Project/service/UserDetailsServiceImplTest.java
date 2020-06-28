@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,5 +48,10 @@ class UserDetailsServiceImplTest {
     void logout() {
         userDetailsService.logout(1);
         assertFalse(userDetailsService.findById(1).isLogged());
+    }
+
+    @Test
+    void username_Null(){
+        assertThrows(UsernameNotFoundException.class, ()->userDetailsService.loadUserByUsername(null));
     }
 }

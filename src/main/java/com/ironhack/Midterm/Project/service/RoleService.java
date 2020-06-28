@@ -13,8 +13,4 @@ public class RoleService {
 
     @Autowired
     private RoleRepository roleRepo;
-
-    public List<Role> findByUserId(Long id) {
-        return roleRepo.findByUser_Id(id);
-    }
 }

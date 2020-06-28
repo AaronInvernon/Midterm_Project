@@ -14,7 +14,7 @@ public class AccountHolderController {
     @Autowired
     private AccountHoldersService accountHoldersService;
 
-    @PostMapping("/accountHolder")
+    @PostMapping("/user/accountHolder")
     @ResponseStatus(HttpStatus.CREATED)
     public AccountHolders create(AccountHolders a){ return accountHoldersService.create(a); }
 }

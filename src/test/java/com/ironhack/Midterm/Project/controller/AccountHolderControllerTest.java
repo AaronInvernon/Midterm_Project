@@ -1,24 +1,22 @@
 package com.ironhack.Midterm.Project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ironhack.Midterm.Project.dto.CheckingPrimaryOwner;
-import com.ironhack.Midterm.Project.model.Checking;
-import com.ironhack.Midterm.Project.model.Money;
-import com.ironhack.Midterm.Project.model.Savings;
-import com.ironhack.Midterm.Project.service.CheckingService;
-import com.ironhack.Midterm.Project.service.SavingsService;
+import com.ironhack.Midterm.Project.model.AccountHolders;
+import com.ironhack.Midterm.Project.model.Address;
+import com.ironhack.Midterm.Project.model.Admin;
+import com.ironhack.Midterm.Project.service.AccountHoldersService;
+import com.ironhack.Midterm.Project.service.AdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,32 +26,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-class CheckingControllerTest {
+class AccountHolderControllerTest {
 
     @MockBean
-    private CheckingService checkingService;
+    private AccountHoldersService acchService;
     @Autowired
     private WebApplicationContext webApplicationContext;
-    private CheckingPrimaryOwner checkingPrimaryO;
-    private Checking checking;
+    private AccountHolders accountHolders;
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        checkingPrimaryO = new CheckingPrimaryOwner(new Money(new BigDecimal(100)), 1234, null);
-        checkingPrimaryO.setId(1);
-        when(checkingService.create(any(), any())).thenReturn(checking);
+        LocalDate dBirth = LocalDate.now();
+        Address address = new Address();
+        accountHolders = new AccountHolders("Aaron", "Aaron", "aaron", dBirth, address);
+        accountHolders.setId(1);
+        when(acchService.create(any())).thenReturn(accountHolders);
     }
+
     @Test
-    @WithMockUser(username = "user", password = "user")
     public void create() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        mockMvc.perform(post("/account/checking/1")
+        mockMvc.perform(post("/user/accountHolder")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(checkingPrimaryO)))
+                .content(objectMapper.writeValueAsString(accountHolders)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value("1"));
     }
-
 }

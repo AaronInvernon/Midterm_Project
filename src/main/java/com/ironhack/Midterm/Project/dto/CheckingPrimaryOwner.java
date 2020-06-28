@@ -80,16 +80,4 @@ public class CheckingPrimaryOwner {
     public AccountHolders getSecondaryOwner() {
         return secondaryOwner;
     }
-
-    public void setMonthlyMaintenanceFee(Money monthlyMaintenanceFee) {
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-    }
-
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDate creationDate) {
-        this.creationDate = creationDate;
-    }
 }

@@ -1,12 +1,11 @@
 package com.ironhack.Midterm.Project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ironhack.Midterm.Project.dto.CheckingPrimaryOwner;
-import com.ironhack.Midterm.Project.model.Checking;
 import com.ironhack.Midterm.Project.model.Money;
 import com.ironhack.Midterm.Project.model.Savings;
-import com.ironhack.Midterm.Project.service.CheckingService;
+import com.ironhack.Midterm.Project.model.ThirdParty;
 import com.ironhack.Midterm.Project.service.SavingsService;
+import com.ironhack.Midterm.Project.service.ThirdPartyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,32 +27,31 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-class CheckingControllerTest {
+class ThirdPartyControllerTest {
 
     @MockBean
-    private CheckingService checkingService;
+    private ThirdPartyService thirdPartyService;
     @Autowired
     private WebApplicationContext webApplicationContext;
-    private CheckingPrimaryOwner checkingPrimaryO;
-    private Checking checking;
+    private ThirdParty thirdParty;
+
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        checkingPrimaryO = new CheckingPrimaryOwner(new Money(new BigDecimal(100)), 1234, null);
-        checkingPrimaryO.setId(1);
-        when(checkingService.create(any(), any())).thenReturn(checking);
+        thirdParty = new ThirdParty("aaron", "aaron", "aaron", "aaron");
+        thirdParty.setId(1);
+        when(thirdPartyService.create(any())).thenReturn(thirdParty);
     }
     @Test
     @WithMockUser(username = "user", password = "user")
     public void create() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        mockMvc.perform(post("/account/checking/1")
+        mockMvc.perform(post("/user/thirdParty")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(checkingPrimaryO)))
+                .content(objectMapper.writeValueAsString(thirdParty)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value("1"));
     }
-
 }

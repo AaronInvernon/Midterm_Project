@@ -1,5 +1,6 @@
 package com.ironhack.Midterm.Project.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.Midterm.Project.dto.CheckingPrimaryOwner;
 import com.ironhack.Midterm.Project.model.*;
@@ -35,7 +36,7 @@ class AccountControllerTest {
 
 
     @MockBean
-    private SavingsService savingsService;
+    private AccountService accountService;
     @Autowired
     private WebApplicationContext webApplicationContext;
     private Savings savings;
@@ -47,9 +48,30 @@ class AccountControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         savings = new Savings(new Money(new BigDecimal(100)), 1234, null);
         savings.setId(1);
-        when(savingsService.create(any(), any(), any())).thenReturn(savings);
+        when(accountService.findById(any(), any())).thenReturn(savings);
+        when(accountService.findBalanceById(any(), any())).thenReturn(savings.getBalance().getAmount());
     }
 
+
+    @Test
+    @WithMockUser(username = "user", password = "user")
+    void findById() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        mockMvc.perform(get("/account/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(savings)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(username = "user", password = "user")
+    void findBalanceById() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        mockMvc.perform(get("/account/1/balance")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(savings)))
+                .andExpect(status().isOk());
+    }
 
 /*    @Test
     @WithMockUser(username = "user", password = "user")

@@ -27,14 +27,5 @@ public class CheckingController {
         return checkingService.create(accountHolderId, checkingPrimaryOwner);
     }
 
-    @GetMapping("/account/checking/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Checking findById(@AuthenticationPrincipal User user, @PathVariable Integer id){
-        return checkingService.findById(id,user);
-    }
-
-    @GetMapping("/account/checking/{id}/balance")
-    @ResponseStatus(HttpStatus.OK)
-    public BigDecimal findBalanceById(@AuthenticationPrincipal User user, @PathVariable Integer id) { return checkingService.findBalanceById(user, id); }
 
 }

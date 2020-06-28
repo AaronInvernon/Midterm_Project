@@ -62,9 +62,5 @@ public class CheckingService {
         return c;
     }
 
-    public BigDecimal findBalanceById(User user, Integer id){
-        return findById(id, user).getBalance().getAmount();
-    }
-
 }
 

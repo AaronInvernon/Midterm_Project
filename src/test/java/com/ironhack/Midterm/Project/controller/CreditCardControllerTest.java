@@ -1,11 +1,10 @@
 package com.ironhack.Midterm.Project.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ironhack.Midterm.Project.dto.CheckingPrimaryOwner;
-import com.ironhack.Midterm.Project.model.Checking;
+import com.ironhack.Midterm.Project.model.CreditCard;
 import com.ironhack.Midterm.Project.model.Money;
 import com.ironhack.Midterm.Project.model.Savings;
-import com.ironhack.Midterm.Project.service.CheckingService;
+import com.ironhack.Midterm.Project.service.CreditCardService;
 import com.ironhack.Midterm.Project.service.SavingsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,32 +27,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-class CheckingControllerTest {
+class CreditCardControllerTest {
 
     @MockBean
-    private CheckingService checkingService;
+    private CreditCardService creditCardService;
     @Autowired
     private WebApplicationContext webApplicationContext;
-    private CheckingPrimaryOwner checkingPrimaryO;
-    private Checking checking;
+    private CreditCard creditCard;
+
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        checkingPrimaryO = new CheckingPrimaryOwner(new Money(new BigDecimal(100)), 1234, null);
-        checkingPrimaryO.setId(1);
-        when(checkingService.create(any(), any())).thenReturn(checking);
+        creditCard = new CreditCard(new Money(new BigDecimal(100)), 1234, null);
+        creditCard.setId(1);
+        when(creditCardService.create(any(), any(), any())).thenReturn(creditCard);
     }
+
     @Test
     @WithMockUser(username = "user", password = "user")
     public void create() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
-        mockMvc.perform(post("/account/checking/1")
+        mockMvc.perform(post("/account/creditCard")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(checkingPrimaryO)))
+                .content(objectMapper.writeValueAsString(creditCard)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value("1"));
     }
-
 }

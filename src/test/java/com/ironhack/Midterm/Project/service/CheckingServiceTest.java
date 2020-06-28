@@ -72,12 +72,4 @@ class CheckingServiceTest {
         assertThrows(DataNotFoundException.class, () ->checkingService.findById(50,admin));
     }
 
-    @Test
-    void findBalanceById() {
-        admin.login();
-        Money amount  = new Money(new BigDecimal("2000"));
-        checkingPrimaryOwner = new CheckingPrimaryOwner(amount,123456, a);
-        Checking c = checkingService.create(a.getId(), checkingPrimaryOwner);
-        assertEquals(new BigDecimal("2000.00"), checkingService.findBalanceById(admin, c.getId()));
-    }
 }

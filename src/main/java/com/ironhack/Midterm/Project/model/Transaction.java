@@ -40,8 +40,4 @@ public class Transaction {
     public LocalDate getDate() {
         return dateAt;
     }
-
-    public void setDate(LocalDate dateAt) {
-        this.dateAt = dateAt;
-    }
 }
