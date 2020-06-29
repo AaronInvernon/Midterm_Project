@@ -5,6 +5,7 @@ import com.ironhack.Midterm.Project.service.AccountHoldersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,5 +17,5 @@ public class AccountHolderController {
 
     @PostMapping("/user/accountHolder")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountHolders create(AccountHolders a){ return accountHoldersService.create(a); }
+    public AccountHolders create(@RequestBody AccountHolders a){ return accountHoldersService.create(a); }
 }

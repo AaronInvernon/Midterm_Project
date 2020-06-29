@@ -15,20 +15,18 @@ public class Address {
     private String city;
     private Integer postCode;
     private String street;
-    private Short portalNumber;
-    private Short floor;
+    private Integer portalNumber;
+    private Integer floor;
     private String door;
-    @JsonIgnore
     @OneToMany(mappedBy="address", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
     private List<AccountHolders> accountHolders = new ArrayList<>();
-    @JsonIgnore
     @OneToMany(mappedBy="mailingAddress", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
     private List<AccountHolders> mailingAccountHoldersList = new ArrayList<>();
 
     public Address() {
     }
 
-    public Address(String country, String city, Integer postCode, String street, Short portalNumber, Short floor, String door, List<AccountHolders> accountHolders, List<AccountHolders> mailingAccountHoldersList) {
+    public Address(String country, String city, Integer postCode, String street, Integer portalNumber, Integer floor, String door, List<AccountHolders> accountHolders, List<AccountHolders> mailingAccountHoldersList) {
         this.country = country;
         this.city = city;
         this.postCode = postCode;

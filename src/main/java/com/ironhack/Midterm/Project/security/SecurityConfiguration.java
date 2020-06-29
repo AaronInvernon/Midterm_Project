@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.headers().frameOptions().disable();
 
         httpSecurity.authorizeRequests()
-                .mvcMatchers(HttpMethod.POST, "/user/accountHolder").hasAuthority("ROLE_ADMIN")
+                /*.mvcMatchers(HttpMethod.POST, "/user/accountHolder").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/user/admin").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/user/thirdParty").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers(HttpMethod.GET, "/account/{id}").hasAnyAuthority("ROLE_ADMIN", "ROLE_ACCOUNT_HOLDER")
@@ -70,7 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.POST, "/account/{id}/transference").hasAnyAuthority("ROLE_ADMIN", "ROLE_ACCOUNT_HOLDER")
                 .mvcMatchers(HttpMethod.POST, "/account/checking/{id}").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers(HttpMethod.POST, "/account/creditCard").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers(HttpMethod.POST, "/account/saving").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.POST, "/account/saving").hasAuthority("ROLE_ADMIN")*/
                 .anyRequest().permitAll();
 
     }

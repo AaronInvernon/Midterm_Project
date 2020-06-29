@@ -23,8 +23,8 @@ public class CheckingController {
 
     @PostMapping("/account/checking/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Checking create(@RequestBody CheckingPrimaryOwner checkingPrimaryOwner, @PathVariable Integer accountHolderId){
-        return checkingService.create(accountHolderId, checkingPrimaryOwner);
+    public Checking create(@RequestBody CheckingPrimaryOwner checkingPrimaryOwner, @PathVariable Integer id){
+        return checkingService.create(id, checkingPrimaryOwner);
     }
 
 

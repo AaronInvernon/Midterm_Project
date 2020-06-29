@@ -46,8 +46,8 @@ public class CheckingService {
         accountHolder = accountHoldersRepository.findById(accountHolderId).orElseThrow(() -> new DataNotFoundException("User not found"));
         if(checking.getSecondaryOwner() != null){
             LOGGER.info("checking didn't have a secondaryOwner");
-            newChecking.setSecondaryOwner(checking.getSecondaryOwner());
-            newStudentChecking.setSecondaryOwner(checking.getSecondaryOwner());
+            newChecking.setSecondaryOwner(accountHoldersRepository.findById(secondaryOwner.getId()).orElseThrow(() -> new DataNotFoundException("Owner not found")));
+            newStudentChecking.setSecondaryOwner(accountHoldersRepository.findById(secondaryOwner.getId()).orElseThrow(() -> new DataNotFoundException("Owner not found")));
         }
         if(Period.between(accountHolder.getDateOfBirth(), today).getYears() < 24){
             LOGGER.info("The owner have less than 24, create a studentChecking");

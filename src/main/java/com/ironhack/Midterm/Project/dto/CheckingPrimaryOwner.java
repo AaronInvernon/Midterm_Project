@@ -18,8 +18,8 @@ public class CheckingPrimaryOwner {
     private Integer id;
     private Money balance;
     private Integer secretKey;
-    private AccountHolders primaryOwner;
-    private AccountHolders secondaryOwner;
+    private Integer primaryOwner;
+    private Integer secondaryOwner;
     protected Money minimumBalance;
     private final Money penaltyFee = new Money(new BigDecimal("40"));
     private Money monthlyMaintenanceFee;
@@ -27,7 +27,7 @@ public class CheckingPrimaryOwner {
     private Status status;
     private LocalDate creationDate;
 
-    public CheckingPrimaryOwner(Money balance, Integer secretKey, AccountHolders primaryOwner, AccountHolders secondaryOwner) {
+    public CheckingPrimaryOwner(Money balance, Integer secretKey, Integer primaryOwner, Integer secondaryOwner) {
             this.balance = balance;
             this.secretKey = secretKey;
             this.primaryOwner = primaryOwner;
@@ -38,7 +38,7 @@ public class CheckingPrimaryOwner {
             this.creationDate = LocalDate.now();
     }
 
-    public CheckingPrimaryOwner(Money balance, Integer secretKey, AccountHolders primaryOwner) {
+    public CheckingPrimaryOwner(Money balance, Integer secretKey, Integer primaryOwner) {
         this(balance, secretKey, primaryOwner, null);
     }
 
@@ -69,15 +69,15 @@ public class CheckingPrimaryOwner {
         this.secretKey = secretKey;
     }
 
-    public AccountHolders getPrimaryOwner() {
+    public Integer getPrimaryOwner() {
         return primaryOwner;
     }
 
-    public void setPrimaryOwner(AccountHolders primaryOwner) {
+    public void setPrimaryOwner(Integer primaryOwner) {
         this.primaryOwner = primaryOwner;
     }
 
-    public AccountHolders getSecondaryOwner() {
+    public Integer getSecondaryOwner() {
         return secondaryOwner;
     }
 }

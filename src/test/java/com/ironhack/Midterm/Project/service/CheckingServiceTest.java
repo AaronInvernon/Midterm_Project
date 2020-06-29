@@ -47,7 +47,7 @@ class CheckingServiceTest {
    @Test
     void create() {
         Money amount  = new Money(new BigDecimal("2000"));
-        checkingPrimaryOwner = new CheckingPrimaryOwner(amount,123456, a);
+        checkingPrimaryOwner = new CheckingPrimaryOwner(amount,123456, a.getId());
         Checking c = checkingService.create(a.getId(), checkingPrimaryOwner);
         assertEquals("Aaron", c.getPrimaryOwner().getName());
     }
@@ -55,7 +55,7 @@ class CheckingServiceTest {
     @Test
     void findById() {
         Money amount  = new Money(new BigDecimal("2000"));
-        checkingPrimaryOwner = new CheckingPrimaryOwner(amount,123456, a);
+        checkingPrimaryOwner = new CheckingPrimaryOwner(amount,123456, a.getId());
         Checking c = checkingService.create(a.getId(), checkingPrimaryOwner);
         admin.login();
         assertDoesNotThrow(() ->checkingService.findById(1,admin));
